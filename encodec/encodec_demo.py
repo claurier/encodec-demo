@@ -22,6 +22,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import soundfile as sf
 import torchaudio
 import gradio as gr
 from encodec import EncodecModel
@@ -172,7 +173,8 @@ def run(audio_path: str | None, model_name: str, bw: float):
     is_stereo  = "stereo" in model_name.lower()
 
     # ── Load & pre-process ────────────────────────────────────────────────────
-    wav, orig_sr = torchaudio.load(audio_path, backend="soundfile")
+    wav_np, orig_sr = sf.read(audio_path, always_2d=True)  # (T, C)
+    wav = torch.from_numpy(wav_np.T).float()               # (C, T)
     if orig_sr != sr:
         wav = torchaudio.functional.resample(wav, orig_sr, sr)
     wav = prepare_waveform(wav, is_stereo)
