@@ -32,6 +32,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 log = logging.getLogger(__name__)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+MAX_DURATION_S = 30  # maximum allowed audio duration in seconds
 log.info("Device: %s", DEVICE)
 
 # ─── EnCodec constants ────────────────────────────────────────────────────────
@@ -174,6 +175,9 @@ def run(audio_path: str | None, model_name: str, bw: float):
 
     # ── Load & pre-process ────────────────────────────────────────────────────
     wav_np, orig_sr = sf.read(audio_path, always_2d=True)  # (T, C)
+    duration = len(wav_np) / orig_sr
+    if duration > MAX_DURATION_S:
+        raise gr.Error(f"Audio is {duration:.1f}s — maximum allowed duration is {MAX_DURATION_S}s.")
     wav = torch.from_numpy(wav_np.T).float()               # (C, T)
     if orig_sr != sr:
         wav = torchaudio.functional.resample(wav, orig_sr, sr)
@@ -240,6 +244,7 @@ RVQ reconstruction from Meta's **EnCodec** model.
                     label="Upload Audio  (WAV / MP3 / FLAC …)",
                     type="filepath",
                 )
+                gr.Markdown(f"⚠️ Maximum duration: **{MAX_DURATION_S} seconds**")
                 run_btn = gr.Button("Encode → Decode", variant="primary")
                 info_box = gr.Textbox(
                     label="Run Info & SNR",
