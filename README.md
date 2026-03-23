@@ -1,4 +1,4 @@
-# EnCodec demo (`/`)
+# EnCodec demo 
 
 A Gradio interface for Meta's [EnCodec](https://github.com/facebookresearch/encodec) neural audio codec. Upload an audio file, choose a bitrate, and compare the original against the RVQ reconstruction with side-by-side spectrograms and SNR metrics.
 
@@ -7,6 +7,8 @@ A Gradio interface for Meta's [EnCodec](https://github.com/facebookresearch/enco
 - EnCodec 48 kHz · stereo
 
 **Bitrates:** 3.0 / 6.0 / 12.0 / 24.0 kbps
+
+We provide the code to run it locally and/or deploy on a server
 
 ---
 
