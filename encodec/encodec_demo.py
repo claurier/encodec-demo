@@ -172,7 +172,7 @@ def run(audio_path: str | None, model_name: str, bw: float):
     is_stereo  = "stereo" in model_name.lower()
 
     # ── Load & pre-process ────────────────────────────────────────────────────
-    wav, orig_sr = torchaudio.load(audio_path)
+    wav, orig_sr = torchaudio.load(audio_path, backend="soundfile")
     if orig_sr != sr:
         wav = torchaudio.functional.resample(wav, orig_sr, sr)
     wav = prepare_waveform(wav, is_stereo)

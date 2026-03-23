@@ -4,3 +4,4 @@ encodec==0.1.1
 gradio==6.9.0
 matplotlib==3.10.8
 numpy==2.4.3
+soundfile==0.13.1
