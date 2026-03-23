@@ -36,8 +36,8 @@ sudo usermod -aG docker $USER
 newgrp docker
 
 # Clone and start
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/claurier/encodec-demo.git
+cd encodec-demo
 docker compose up -d --build
 ```
 
