@@ -1,0 +1,12 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Model weights (large, re-downloaded at build time)
+~/.cache/torch/
+
+# OS
+.DS_Store

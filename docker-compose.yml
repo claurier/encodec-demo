@@ -1,0 +1,28 @@
+services:
+
+  # ── EnCodec demo ─────────────────────────────────────────────────────────────
+  encodec:
+    build: ./encodec
+    restart: unless-stopped
+    # Not exposed to the host directly — all traffic goes through nginx
+
+  # ── Future apps ──────────────────────────────────────────────────────────────
+  # other-app:
+  #   build: ./other-app
+  #   restart: unless-stopped
+
+  # ── Reverse proxy ────────────────────────────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - certs:/etc/letsencrypt
+    depends_on:
+      - encodec
+    restart: unless-stopped
+
+volumes:
+  certs:
