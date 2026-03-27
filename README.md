@@ -10,6 +10,8 @@ A Gradio interface for Meta's [EnCodec](https://github.com/facebookresearch/enco
 
 We provide the code to run it locally and/or deploy on a server
 
+Try is here, where it is temporary deployed: http://204.168.189.35
+
 ---
 
 ## Running locally
